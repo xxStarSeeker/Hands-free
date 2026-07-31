@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store page</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../CSS/View Store Style.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <a href="Add store.html" class="btn">+Add new store</a>
+
+            </div>
+
+            <!-- ======================= Cards ================== -->
+
+            <div class="cardBox" id="cardbox">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= Popup for update  ================= -->
+    <div class="popup" id="popup">
+        <form action="">
+            <input type="text" name="storeName" id="name" placeholder="Enter Name">
+            <input type="text" name="phoneNum" id="phone" placeholder="Enter Phone Number">
+            <input type="text" name="xAxis" id="x" placeholder="Enter X-Axis">
+            <input type="text" name="yAxis" id="y" placeholder="Enter Y-Axis">
+            <input type="text" name="logo" id="storeLogo" placeholder="Enter Logo URL">
+            <input type="submit" value="Update">
+            <button class="delete">Delete</button>
+        </form>
+    </div>
+
+    <!-- ======================= Popup for items  ================= -->
+
+    <div class="popup2" id="popup2">
+        <div class="itemsBox" id="itemsBox">
+
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- =========== Link with Firebase =========  -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getAuth, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+            authDomain: "hands-free-project-3a882.firebaseapp.com",
+            projectId: "hands-free-project-3a882",
+            storageBucket: "hands-free-project-3a882.appspot.com",
+            messagingSenderId: "936420309838",
+            appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+            measurementId: "G-4S2Q2GEHW7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+        const analytics = getAnalytics(app);
+        const ReadRef = ref(database, 'Store Account/');
+        const itemsRef = ref(database, 'Items/');
+
+        //Access to body
+        let box = document.getElementById("cardbox");
+        let itemsBox = document.getElementById("itemsBox");
+        let popup = document.querySelector(".popup");
+        let popup2 = document.querySelector(".popup2");
+        let form = document.querySelector("form");
+        let btn = document.querySelector(".delete");
+        let numOfItems = 0;
+
+        viewStores();
+
+
+        //********************View stores function************************
+        //Read from firebase
+        function viewStores() {
+            onValue(ReadRef, (snapshot) => {
+                box.innerHTML = "";
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    let card =
+                        `
+                    <div class="card" data-id=${user.Uid}>
+
+                        <div class="iconBx">
+                             <button class=imgBtn>
+                            <img src="${user.Logo}"></button>
+                        </div>
+
+                        <div>
+                           <div class="name">${user.Store_name}</div>
+                           <div class="numbers">NO.items: ${user.Num_of_Items}</div>
+                        </div>
+
+                        <div>
+                             <button class="btn1">Edit</button>
+                            <button class="count"></button>
+
+                        </div>
+                       
+                    </div>`
+
+                    box.innerHTML += card;
+
+                    //View Items
+                    let viewItems = document.querySelectorAll(".imgBtn");
+                    viewItems.forEach(imgBtn => {
+                        imgBtn.addEventListener("click", () => {
+                            viewItem(imgBtn);
+                        });
+                    })
+
+                    //Count Items
+                    let countItems = document.querySelectorAll(".count");
+                    countItems.forEach(count => {
+                        let storeID = count.parentElement.parentElement.dataset.id;
+                        onValue(itemsRef, (snapshot) => {
+                            snapshot.forEach((childSnapshot) => {
+
+                                const item = childSnapshot.val();
+                                const storeRef2 = ref(database, 'Store Account/' + storeID);
+
+                                onValue(storeRef2, (snapshot) => {
+                                    const user = snapshot.val();
+                                    if (user.Store_name == item.store) {
+                                        numOfItems++
+                                    }
+
+                                });
+                            })
+                            update(ref(database, 'Store Account/' + storeID), {
+
+                                Num_of_Items: numOfItems
+                            })
+                            numOfItems = 0
+                        });
+
+                    });
+                    //Update Store
+                    let editBtn = document.querySelectorAll(".btn1");
+                    editBtn.forEach(btn1 => {
+                        btn1.addEventListener("click", () => {
+                            popup.classList.add("active");
+                            let storeId2 = btn1.parentElement.parentElement.dataset.id;
+
+                            updateStores(storeId2);
+
+                            btn.addEventListener("click", (e) => {
+                                e.preventDefault();
+                                deleteStore(storeId2);
+
+                            })
+                        })
+                    })
+                })
+            })
+        }
+        //********************View items function*************************
+        function viewItem(imgBtn) {
+            popup2.classList.add("active");
+            let storeId = imgBtn.parentElement.parentElement.dataset.id;
+
+            onValue(itemsRef, (snapshot) => {
+                itemsBox.innerHTML = "";
+                snapshot.forEach((childSnapshot) => {
+                    const item = childSnapshot.val();
+
+                    const storeRef = ref(database, 'Store Account/' + storeId);
+                    onValue(storeRef, (snapshot) => {
+                        const store = snapshot.val();
+                        if (store.Store_name == item.store) {
+                            let itemsCard =
+                                `<div class="item">
+                                            <div class="icons">
+                                                <img src="../Icons/bag3.png">
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="serial">Serial number</div>
+                                                <div class="number">${item.serial_number}</div>
+                                            </div>
+                                        </div>`
+                            itemsBox.innerHTML += itemsCard;
+                        }
+                    });
+                })
+            })
+        }
+        //********************Update store function***********************
+        function updateStores(storeId2) {
+
+            //Display user data on the update form
+            onValue(ReadRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const store = childSnapshot.val();
+                    if (storeId2 == store.Uid) {
+                        form.storeName.value = store.Store_name;
+                        form.phoneNum.value = store.Phon_Number;
+                        form.xAxis.value = store.X_axis;
+                        form.yAxis.value = store.Y_axis;
+                        form.logo.value = store.Logo;
+                    }
+                })
+            })
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                //Input Validation
+                if (inputValidation(form.storeName.value, form.phoneNum.value, form.xAxis.value, form.yAxis.value, form.logo.value) == false) {
+                    return
+
+                }
+
+                //Update store info
+                update(ref(database, 'Store Account/' + storeId2), {
+                    Store_name: form.storeName.value,
+                    Phon_Number: form.phoneNum.value,
+                    X_axis: form.xAxis.value,
+                    Y_axis: form.yAxis.value,
+                    Logo: form.logo.value
+                })
+                alert('Updated successfully');
+
+            })
+        }
+        //********************Delete store function***********************
+        function deleteStore(storeId2) {
+
+            remove(ref(database, 'Store Account/' + storeId2), {
+
+            })
+            alert('Deleted successfully');
+        }
+
+        //********************Input valodaton function*************************
+
+        function inputValidation(storename, phone, x_axis, y_axis, logo) {
+            if (storename == "" || phone == "" || x_axis == "" || y_axis == "" || logo == "") {
+                alert('Please Fill All The Inputs')
+                return false
+            }
+            if (storename.length < 3 || storename.length > 20) {
+                alert('Please enter valid store name length')
+                return false
+            }
+            if (!phone.match(/^[0-9]{10}$/)) {
+                alert('Enter valid phone number')
+                return false
+            }
+            return true
+
+        }
+
+        ////Sign out
+        document.getElementById("logOut").addEventListener('click', function (e) {
+            e.preventDefault();
+            signOut(auth)
+                .then(() => {
+                    alert('User signed out');
+                    document.getElementById("signOut").click()
+                })
+                .catch((error) => {
+                    // An error happened.
+                    alert('Error signing out:', error);
+                });
+        })
+
+        window.addEventListener("click", (e) => {
+            if ((e.target == popup) || (e.target == popup2)) {
+                popup.classList.remove("active");
+                popup2.classList.remove("active");
+                form.reset();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

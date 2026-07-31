@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxes page</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../CSS/Boxes style.css">
+    <script type="module" src="../HTML/Adminstrator.js" defer></script>
+
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="header">
+                    <label>
+                        <h2 id="header">Boxes</h2>
+                    </label>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ======================= Cards ==================== -->
+            <div class="cardBox" id="cardbox">
+
+            </div>
+
+            <!-- ======================= Popup for assign box ================= -->
+            <div class="popup" id="popup">
+                <form action="">
+                    <input type="text" id="email" name="userEmail" placeholder="Enter shopper email">
+                    <input type="submit" class="assign_Btn" value="Assign">
+                </form>
+            </div>
+            <!-- ======================= Popup for clear box ================= -->
+            <div class="popup2" id="popup2">
+                <form action="" class="form2">
+                    <span>Are you sure you want to clear the box</span>
+                    <input type="submit" class="clear_Btn" value="Clear">
+                </form>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+<!-- ====== Link with firebase ======= -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+    import { getDatabase, ref, onValue, set, remove, get, child, update, orderByChild } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+    import { getAuth, signOut, createUserWithEmailAndPassword, signInWithCredential, PhoneAuthProvider, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+        authDomain: "hands-free-project-3a882.firebaseapp.com",
+        projectId: "hands-free-project-3a882",
+        storageBucket: "hands-free-project-3a882.appspot.com",
+        messagingSenderId: "936420309838",
+        appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+        measurementId: "G-4S2Q2GEHW7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const analytics = getAnalytics(app);
+    const ReadRef = ref(database, 'Boxes/');
+    const shopperRef = ref(database, 'Shoppers Accounts/');
+    const itemsRef = ref(database, 'Items/');
+
+    //Access to html element
+    let cardBox = document.getElementById("cardbox");
+    let popup = document.querySelector(".popup");
+    let popup2 = document.querySelector(".popup2");
+    let form = document.querySelector("form");
+    let form2 = document.querySelector(".form2");
+
+    //Read from firebase to view boxes
+    viewBoxes();
+
+
+    //********************View boxes function*************************
+    function viewBoxes() {
+        onValue(ReadRef, (snapshot) => {
+            cardBox.innerHTML = "";
+            snapshot.forEach((childSnapshot) => {
+                const box = childSnapshot.val();
+
+                let card =
+                    ` <div class="card" data-id=${box.Box_number}>
+
+                  <div class="cardInfo">
+                      <div class="numbers">${box.Box_number}</div>
+                      <div class="userEmail">${box.User}</div>
+                   </div>
+
+                    <div>
+                     <button class="btn1">Assign</button>
+                     <button class="btn2">Clear</button>
+                   </div>
+
+              </div>`
+
+                cardBox.innerHTML += card;
+
+                //Assign Button
+                let assignBtn = document.querySelectorAll(".btn1");
+                assignBtn.forEach(btn1 => {
+                    btn1.addEventListener("click", () => {
+                        assignBoxToShopper(btn1);
+                    })
+                })
+
+                //Clear Button
+                let clearBtn = document.querySelectorAll(".btn2");
+                clearBtn.forEach(btn2 => {
+                    btn2.addEventListener("click", () => {
+                        clearBox(btn2);
+
+                    })
+                })
+            })
+        })
+    }
+
+    //********************Assign box to shopper function*************************
+    function assignBoxToShopper(btn1) {
+        popup.classList.add("active");
+        let boxId = btn1.parentElement.parentElement.dataset.id;
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            //Check input validation
+            validateInput(form.userEmail.value);
+
+            //Search for the user and add the box 
+            onValue(shopperRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const shopper = childSnapshot.val();
+
+                    if (shopper.email == form.userEmail.value) {
+                        if (shopper.box == '000') {
+
+                            update(ref(database, 'Shoppers Accounts/' + shopper.id), {
+
+                                box: boxId
+                            })
+
+                            update(ref(database, 'Boxes/' + boxId), {
+
+                                User: form.userEmail.value
+                            })
+                            alert('Box assigned successfully');
+                        }
+                        else {
+                            alert('The user had a box');
+                        }
+                    }
+                })
+            })
+        })
+    }
+
+    //********************Clear box function*************************
+    function clearBox(btn2) {
+        popup2.classList.add("active");
+        let boxId2 = btn2.parentElement.parentElement.dataset.id;
+        form2.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            //Search for the user and reset the box 
+
+
+            onValue(shopperRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const shopper = childSnapshot.val();
+
+                    const boxesRef = ref(database, 'Boxes/' + boxId2);
+                    onValue(boxesRef, (snapshot) => {
+                        const box2 = snapshot.val();
+
+                        /// If user is found delete his items
+                        if (box2.User == shopper.email) {
+
+                            onValue(itemsRef, (snapshot) => {
+                                snapshot.forEach((childSnapshot) => {
+                                    const item = childSnapshot.val();
+
+                                    if (shopper.email == item.shopper_email) {
+
+                                        remove(ref(database, 'Items/' + item.serial_number), {
+                                        })
+
+                                    }
+                                })
+                            })
+                        }
+                    })
+                })
+            })
+
+            onValue(shopperRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const shopper = childSnapshot.val();
+
+                    const boxesRef = ref(database, 'Boxes/' + boxId2);
+                    onValue(boxesRef, (snapshot) => {
+                        const box2 = snapshot.val();
+
+                        /// If user is found delete his items
+                        if (box2.User == shopper.email) {
+
+                            update(ref(database, 'Boxes/' + boxId2), {
+                                User: "undefined"
+                            })
+                            update(ref(database, 'Shoppers Accounts/' + shopper.id), {
+                                box: "000"
+                            })
+                        }
+                    })
+                })
+            })
+
+            alert('Box cleared successfully');
+        })}
+
+    //********************Input validation function*************************
+    function validateInput(userEmail) {
+                if (userEmail == "") {
+                    alert('Please fill the field')
+                    console.log('not aloud');
+                    return
+                }
+
+                if (!userEmail.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/)) {
+                    alert('Invalid email format')
+                    console.log('not aloud');
+                    return
+                }
+            }
+
+    window.addEventListener("click", (e) => {
+                if ((e.target == popup) || (e.target == popup2)) {
+                    popup.classList.remove("active");
+                    popup2.classList.remove("active");
+                    form.reset();
+                }
+            });
+
+        ////Sign out
+        document.getElementById("logOut").addEventListener('click', function (e) {
+            e.preventDefault();
+            signOut(auth)
+                .then(() => {
+                    alert('User signed out');
+                    document.getElementById("signOut").click()
+                })
+                .catch((error) => {
+                    // An error happened.
+                    alert('Error signing out:', error);
+                });
+
+
+        })
+
+
+</script>
+
+</html>

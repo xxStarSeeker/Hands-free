@@ -1,0 +1,129 @@
+[
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet">
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="../CSS/Login style.css">
+</head>
+
+<body>
+    <div id="content_container">
+        <div id="form_container">
+            <div id="form_header_container">
+                <h2 id="form_header"> Log In </h2>
+            </div>
+
+            <div id="form_content_container">
+                <div id="form_content_inner_container">
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="password" id="password" placeholder="Enter Password">
+                    <div id="button_container">
+                        <input type="submit" value="LOGIN" class="sub" id="submit">
+                    </div>
+                    <div id="button_container2">
+                        <button class="btn" id="btn1">Forgot Password?</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="homePage" href="Home Page.html"></a>
+</body>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, set, get, child, update, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+        authDomain: "hands-free-project-3a882.firebaseapp.com",
+        projectId: "hands-free-project-3a882",
+        storageBucket: "hands-free-project-3a882.appspot.com",
+        messagingSenderId: "936420309838",
+        appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+        measurementId: "G-4S2Q2GEHW7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const analytics = getAnalytics(app);
+    const ReadRef = ref(database, 'Admin Account/');
+
+    document.getElementById("submit").addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Get all our input fields
+        var email = document.getElementById('email').value
+        var password = document.getElementById('password').value
+        let addminEmai = 'Admin@handsfree.com';
+
+        //Input Validation
+        if (email == "" || password == "") {
+            alert('Please Fill All The Inputs')
+            return
+        }
+
+        if (email.toLowerCase() !== addminEmai.toLowerCase()) {
+            alert("You do not have the privileges");
+            return
+        }
+
+        //Login 
+        login(auth, email, password);
+
+    });
+
+    //********************Login function*************************
+    function login(auth, email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Log in 
+                const user = userCredential.user;
+                const date = new Date();
+                update(ref(database, 'Admin Account/' + user.uid), {
+                    last_login: date,
+                })
+                alert('User is logged in')
+                document.getElementById("homePage").click();
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    }
+
+    //Forgot password 
+    let btn = document.getElementById('btn1');
+    btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        try {
+            sendPasswordResetEmail(auth, email);
+            alert("Password reset email sent. Please check your inbox.");
+        } catch (error) {
+            console.error("Error sending password reset email:", error);
+            alert("Error sending password reset email. Please try again later.");
+        };
+    })
+
+</script>
+
+</html>

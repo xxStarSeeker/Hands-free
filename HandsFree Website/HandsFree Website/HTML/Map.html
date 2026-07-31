@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Map Page</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../CSS/Map style.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="header">
+                    <label>
+                        <h2 id="header">Mall Map</h2>
+                    </label>
+                </div>
+                <button class="btn" id="btn">Update map</button>
+            </div>
+
+            <!-- ================ Map ================= -->
+            <div class="map">
+                <div class="map-card" id="map">
+
+                </div>
+            </div>
+
+            <!-- ================ Map popup================= -->
+            <div class="popup" id="popup">
+                <form action="">
+                    <input type="text" name="mapUrl" placeholder="Enter map url">
+                    <input type="submit" class="update" value="Update">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+    <!-- ====== ionicons ======= -->
+    <script src="https://kit.fontawesome.com/c91be5b359.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+<!-- =========== Link with Firebase =========  -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, onValue, set, get, child, remove, update } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+        authDomain: "hands-free-project-3a882.firebaseapp.com",
+        projectId: "hands-free-project-3a882",
+        storageBucket: "hands-free-project-3a882.appspot.com",
+        messagingSenderId: "936420309838",
+        appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+        measurementId: "G-4S2Q2GEHW7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const analytics = getAnalytics(app);
+    const mapRef = ref(database, 'Mall/');
+
+    //Access to table body
+    let mapCard = document.getElementById("map");
+    let popup = document.querySelector(".popup");
+    let form = document.querySelector("form");
+    let btn = document.querySelector(".add");
+
+
+    //Read from firebase
+    onValue(mapRef, (snapshot) => {
+        mapCard.innerHTML = "";
+        const mallMap = snapshot.val();
+
+        let map =
+            `<img src="${mallMap.Map}">`
+        mapCard.innerHTML += map;
+
+        let updateBtn = document.getElementById("btn");
+        updateBtn.addEventListener("click", () => {
+            popup.classList.add("active");
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                //Input Validation
+                if (form.mapUrl.value == "") {
+                    alert('Please fill the field');
+                    return
+                }
+
+                //Update map
+                addMallMap();
+
+            })
+
+        })
+    })
+
+    //********************Update map function*************************
+    function addMallMap() {
+        update(ref(database, 'Mall/'), {
+            Map: form.mapUrl.value
+
+        })
+        alert('Updated successfully');
+    }
+
+
+    window.addEventListener("click", (e) => {
+        if ((e.target == popup)) {
+            popup.classList.remove("active");
+            form.reset();
+        }
+    });
+
+    ////Sign out
+    document.getElementById("logOut").addEventListener('click', function (e) {
+        e.preventDefault();
+        signOut(auth)
+            .then(() => {
+                alert('User signed out');
+                document.getElementById("signOut").click()
+            })
+            .catch((error) => {
+                // An error happened.
+                alert('Error signing out:', error);
+            });
+
+
+    })
+</script>
+
+</body>
+
+</html>
+
+</html>

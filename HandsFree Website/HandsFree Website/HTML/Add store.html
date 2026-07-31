@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add store form</title>
+    <link rel="stylesheet" href="../CSS/Add store style.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+
+                <div class="header">
+                    <label>
+                        <h2 id="header"> Add New Store </h2>
+
+                    </label>
+                </div>
+            </div>
+
+            <div class="content">
+                <!--====================  Add store form ==================== -->
+                <form action="#">
+                    <div class="user-details">
+
+                        <div class="input-box">
+                            <span class="details">Store Name</span>
+                            <input type="text" id="name" placeholder="Enter store name" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Email</span>
+                            <input type="email" id="email" placeholder="example@handsfree.com" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Phone Number</span>
+                            <input type="text" id="phone" placeholder="05XXXXXXXX">
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Store Address</span>
+                            <input type="number" id="x" placeholder="X-axis" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Store Address</span>
+                            <input type="number" id="y" placeholder="Y-axix" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Store Logo</span>
+                            <input type="text" id="logo" placeholder="Enter the logo URL" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Enter Password</span>
+                            <input type="text" id="password" placeholder="Enter password" required>
+                        </div>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="button">
+                        <input type="submit" value="Add" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+<!-- =========== Link with firebase =========  -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+        authDomain: "hands-free-project-3a882.firebaseapp.com",
+        projectId: "hands-free-project-3a882",
+        storageBucket: "hands-free-project-3a882.appspot.com",
+        messagingSenderId: "936420309838",
+        appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+        measurementId: "G-4S2Q2GEHW7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const analytics = getAnalytics(app);
+
+    document.getElementById("submit").addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Get all our input fields
+        var email = document.getElementById('email').value
+        var password = document.getElementById('password').value
+        var storename = document.getElementById('name').value
+        var x_axis = document.getElementById('x').value
+        var y_axis = document.getElementById('y').value
+        var logo = document.getElementById('logo').value
+        var phone = document.getElementById('phone').value
+
+
+        //Input Validation
+        if (inputValidation(storename, email, password, phone, x_axis, y_axis, logo) == false) {
+            return
+        }
+
+        //Add Store
+        addStore(auth, email, storename, password, phone, x_axis, y_axis, logo);
+
+    });
+
+    //********************Add store function*************************
+    function addStore(auth, email, storename, password, phone, x_axis, y_axis, logo) {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                //Add to database
+                set(ref(database, 'Store Account/' + user.uid), {
+
+                    Uid: user.uid,
+                    Email: email,
+                    Store_name: storename,
+                    Phon_Number: phone,
+                    X_axis: x_axis,
+                    Y_axis: y_axis,
+                    Logo: logo
+                })
+
+                alert('Store Added successfully');
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    }
+
+    //********************Input validation function*************************
+    function inputValidation(storename, email, password, phone, x_axis, y_axis, logo) {
+        if (storename == "" || email == "" || password == "" || phone == "" || x_axis == "" || y_axis == "" || logo == "") {
+            alert('Please Fill All The Inputs')
+            return false
+        }
+
+        if (storename.length < 3 || storename.length > 20) {
+            alert('Please enter valid store name length')
+            return false
+        }
+
+        if (!phone.match(/^[0-9]{10}$/)) {
+            alert('Enter valid phone number')
+            return false
+        }
+        return true
+
+    }
+
+    ////Sign out
+    document.getElementById("logOut").addEventListener('click', function (e) {
+        e.preventDefault();
+        signOut(auth)
+            .then(() => {
+                alert('User signed out');
+                document.getElementById("signOut").click()
+            })
+            .catch((error) => {
+                // An error happened.
+                alert('Error signing out:', error);
+            });
+
+
+    })
+
+</script>
+
+</html>

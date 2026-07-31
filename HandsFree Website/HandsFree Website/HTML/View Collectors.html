@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collectors Page</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../CSS/View collector style.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="header">
+                    <label>
+                        <h2 id="header">View Collectors </h2>
+
+                    </label>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ================ Collector List ================= -->
+            <div class="details">
+                <div class="Collectors">
+                    <div class="cardHeader">
+                        <h2>Collectors</h2>
+
+                        <a href="Create Collector.html" class="btn">+Create new account</a>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Email</td>
+                                <td>Phone Number</td>
+                                <td>Number of items</td>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= Popup for update  ================= -->
+    <div class="popup" id="popup">
+        <form action="">
+            <input type="text" name="userName" id="name" placeholder="Enter Name">
+            <input type="text" name="phoneNum" id="phone" placeholder="Enter Phone Number">
+            <input type="time" name="ST" placeholder="Start Work Time">
+            <input type="time" name="ET" placeholder="End Work Time">
+            <input type="submit" value="Update">
+            <button class="delete">Delete</button>
+        </form>
+    </div>
+
+    <!-- ======================= Popup for items  ================= -->
+    <div class="popup2" id="popup2">
+
+        <div class="itemsBox" id="itemsBox">
+
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- =========== Link with Firebase =========  -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set, get, child, remove, update } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getAuth, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+            authDomain: "hands-free-project-3a882.firebaseapp.com",
+            projectId: "hands-free-project-3a882",
+            storageBucket: "hands-free-project-3a882.appspot.com",
+            messagingSenderId: "936420309838",
+            appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+            measurementId: "G-4S2Q2GEHW7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+        const analytics = getAnalytics(app);
+        const ReadRef = ref(database, 'Collector Account/');
+        const itemsRef = ref(database, 'Items/');
+
+        //Access to table body
+        let tableBody = document.querySelector("tbody");
+        let itemsBox = document.getElementById("itemsBox");
+        let popup = document.querySelector(".popup");
+        let popup2 = document.querySelector(".popup2");
+        let form = document.querySelector("form");
+        let btn = document.querySelector(".delete");
+        var numOfItems = 0;
+
+        //Read from firebase
+        onValue(ReadRef, (snapshot) => {
+            tableBody.innerHTML = "";
+            snapshot.forEach((childSnapshot) => {
+                const user = childSnapshot.val();
+
+                let row =
+                    `<tr data-id=${user.Uid}>
+                       <td>${user.Username}</td>
+                       <td>${user.Email}</td>
+                       <td>${user.Phone_number}</td>
+                       <td>${user.Num_of_Items}</td>
+                       <td><button class="view">View</button><button class="edit">Edit</button>
+                           <button class="count" id="count1" "></button></td>
+                    </tr>`
+                tableBody.innerHTML += row;
+
+                //View Items 
+                let viewItems = document.querySelectorAll(".view");
+                viewItems.forEach(view => {
+                    view.addEventListener("click", () => {
+                        viewItem(view);
+
+                    })
+                })
+
+                //Update collector
+                let editBtn = document.querySelectorAll(".edit");
+                editBtn.forEach(edit => {
+                    edit.addEventListener("click", () => {
+                        let collectorID2 = edit.parentElement.parentElement.dataset.id;
+                        updateCollector(edit, collectorID2);
+
+                        //Delete collector
+                        deleteCollector(btn, collectorID2);
+                    })
+                })
+
+                //Count Items
+                let countItems = document.querySelectorAll(".count");
+                countItems.forEach(count => {
+                    let collectorID3 = count.parentElement.parentElement.dataset.id;
+                    onValue(itemsRef, (snapshot) => {
+                        snapshot.forEach((childSnapshot) => {
+                            const item = childSnapshot.val();
+                            const collectorRef2 = ref(database, 'Collector Account/' + collectorID3);
+
+                            onValue(collectorRef2, (snapshot) => {
+                                const user = snapshot.val();
+                                if (user.Email == item.collector) {
+                                    numOfItems++
+                                }
+                            });
+                        })
+                        update(ref(database, 'Collector Account/' + collectorID3), {
+                            Num_of_Items: numOfItems
+                        })
+                        numOfItems = 0
+                    });
+                });
+            })
+        });
+
+        //********************Update collector function*************************
+        function updateCollector(edit, collectorID2) {
+            popup.classList.add("active");
+            //Display user data on the update form
+            onValue(ReadRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    if (collectorID2 == user.Uid) {
+                        form.userName.value = user.Username;
+                        form.phoneNum.value = user.Phone_number;
+                        form.ST.value = user.Start_work_time;
+                        form.ET.value = user.End_work_time;
+                    }
+                })
+            })
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                //Input Validation
+                if (inputValidation(form.userName.value, form.phoneNum.value, form.ST.value, form.ET.value) == false) {
+                    return
+                }
+                //Update user info
+                update(ref(database, 'Collector Account/' + collectorID2), {
+                    Username: form.userName.value,
+                    Phone_number: form.phoneNum.value,
+                    Start_work_time: form.ST.value,
+                    End_work_time: form.ET.value
+                })
+                alert('Updated successfully');
+            })
+        }
+
+        //********************Delete collector function*******************
+        function deleteCollector(btn, collectorID2) {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                remove(ref(database, 'Collector Account/' + collectorID2), {
+
+                })
+                alert('Deleted successfully');
+            })
+        }
+
+        //********************View items function*************************
+        function viewItem(view) {
+            popup2.classList.add("active");
+            let collectorID = view.parentElement.parentElement.dataset.id;
+            onValue(itemsRef, (snapshot) => {
+                itemsBox.innerHTML = "";
+                snapshot.forEach((childSnapshot) => {
+                    const item = childSnapshot.val();
+
+                    const collectorRef = ref(database, 'Collector Account/' + collectorID);
+                    onValue(collectorRef, (snapshot) => {
+                        const user = snapshot.val();
+
+                        if (user.Email == item.collector) {
+                            let itemsCard =
+                                `<div class="item">
+                                            <div class="icons">
+                                                <img src="../Icons/bag.png">
+                                            </div>
+                                            
+                                            <div>
+                                                <div class="serial">Serial number</div>
+                                                <div class="number">${item.serial_number}</div>
+                                            </div>
+                                            
+                                        </div>`
+                            itemsBox.innerHTML += itemsCard;
+                        }
+                    });
+                })
+            });
+        }
+        window.addEventListener("click", (e) => {
+            if ((e.target == popup) || (e.target == popup2)) {
+                popup.classList.remove("active");
+                popup2.classList.remove("active");
+                form.reset();
+            }
+        });
+
+        //********************Input validation function*************************
+        function inputValidation(userName, phoneNum, ST, ET) {
+
+            if (userName == "" || form.phoneNum.value == "" || ST == "" || ET == "") {
+                alert('Please Fill All The Inputs')
+                return false
+            }
+            if (userName.length < 3 || userName.length > 20) {
+                alert('Please enter valid name length')
+                return false
+            }
+            if (!userName.match(/^[a-zA-Z]*$/)) {
+                alert('Name should be only characters')
+                return false
+            }
+            if (!phoneNum.match(/^[0-9]{10}$/)) {
+                alert('Enter valid phone number')
+                return false
+            }
+            return true
+        }
+
+        ////Sign out
+        document.getElementById("logOut").addEventListener('click', function (e) {
+            e.preventDefault();
+            signOut(auth)
+                .then(() => {
+                    alert('User signed out');
+                    document.getElementById("signOut").click()
+                })
+                .catch((error) => {
+                    // An error happened.
+                    alert('Error signing out:', error);
+                });
+
+
+        })
+    </script>
+
+</body>
+
+</html>

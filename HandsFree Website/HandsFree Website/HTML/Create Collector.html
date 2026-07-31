@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create collector account</title>
+    <link rel="stylesheet" href="../CSS/Create collector style.css">
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <img class="logo" src="../Logos/logo.png">
+
+            <ul>
+                <li>
+                    <a>
+                        <span class="webName">Hands Free</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Home Page.html">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Collectors.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Collectors</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Stores.html">
+                        <span class="icon">
+                            <ion-icon name="storefront-outline"></ion-icon>
+                        </span>
+                        <span class="title">Stores</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="View Shoppers.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shoppers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Boxes.html">
+                        <span class="icon">
+                            <ion-icon name="cube-outline"></ion-icon>
+                        </span>
+                        <span class="title">Boxes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Map.html">
+                        <span class="icon">
+                            <ion-icon name="map-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mall Map</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="logOut">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="../HTML/Login.html" id="signOut"></a>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="header">
+                    <label>
+                        <h2 id="header"> Create Collector Account </h2>
+
+                    </label>
+                </div>
+            </div>
+
+            <div class="content">
+                <!--====================  Create Account form ==================== -->
+                <form action="#" id="form">
+                    <div class="user-details">
+
+                        <div class="input-box">
+                            <span class="details">Name</span>
+                            <input type="text" id="name" placeholder="Enter user name" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Email</span>
+                            <input type="email" id="email" placeholder="example@handsfree.com" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Phone Number</span>
+                            <input type="text" id="phone" placeholder="05XXXXXXXX" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Password</span>
+                            <input type="text" id="password" placeholder="password" required>
+                        </div>
+
+
+                        <div class="input-box">
+                            <span class="details">Start Work Time</span>
+                            <input type="time" id="ST" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">End Work Time</span>
+                            <input type="time" id="ET" required>
+                        </div>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="button">
+                        <input type="submit" value="Create" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../JS/main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+<!-- =========== Link with Firebase =========  -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, onValue, set, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8n5mO7hu1J0vKLjMmTE8kd9JEAB4PIe0",
+        authDomain: "hands-free-project-3a882.firebaseapp.com",
+        projectId: "hands-free-project-3a882",
+        storageBucket: "hands-free-project-3a882.appspot.com",
+        messagingSenderId: "936420309838",
+        appId: "1:936420309838:web:35f9fff37bb838e01abc1f",
+        measurementId: "G-4S2Q2GEHW7"
+    };
+
+    // Initialize Firebase 
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const analytics = getAnalytics(app);
+
+    document.getElementById("submit").addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Get all input fields
+        var email = document.getElementById('email').value
+        var password = document.getElementById('password').value
+        var username = document.getElementById('name').value
+        var phoneNumber = document.getElementById('phone').value
+        var start_work_time = document.getElementById('ST').value
+        var end_work_time = document.getElementById('ET').value
+
+        //Input Validation
+        if (inputValidation(username, phoneNumber, email, password, start_work_time, end_work_time) == false) {
+            return
+        }
+
+        //Create collector acc
+        createCollectorAcc(auth, email, password, phoneNumber, username, end_work_time, start_work_time);
+
+    });
+
+    //********************Create collector acc function*************************
+    function createCollectorAcc(auth, email, password, phoneNumber, username, end_work_time, start_work_time) {
+        // User Auth
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                //Add to database
+                set(ref(database, 'Collector Account/' + user.uid), {
+
+                    Uid: user.uid,
+                    Email: email,
+                    Phone_number: phoneNumber,
+                    Username: username,
+                    End_work_time: end_work_time,
+                    Start_work_time: start_work_time
+                })
+
+                alert('Account created successfully');
+            })
+            // handle error
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    }
+
+    //********************Input validation function*************************
+    function inputValidation(username, phoneNumber, email, password, start_work_time, end_work_time) {
+        if (username == "" || email == "" || password == "" || phoneNumber == "" || start_work_time == "" || end_work_time == "") {
+            alert('Please Fill All The Inputs')
+            return false
+        }
+
+        if (username.length < 3 || username.length > 20) {
+            alert('Please enter valid name length')
+            return false
+        }
+
+        if (!username.match(/^[a-zA-Z]*$/)) {
+            alert('Name should be only characters')
+            return false
+        }
+
+        if (!phoneNumber.match(/^[0-9]{10}$/)) {
+            alert('Enter valid phone number')
+            return false
+        }
+
+        return true
+    }
+
+    ////Sign out
+    document.getElementById("logOut").addEventListener('click', function (e) {
+        e.preventDefault();
+        signOut(auth)
+            .then(() => {
+                alert('User signed out');
+                document.getElementById("signOut").click()
+            })
+            .catch((error) => {
+                // An error happened.
+                alert('Error signing out:', error);
+            });
+
+
+    })
+</script>
+
+</html>
