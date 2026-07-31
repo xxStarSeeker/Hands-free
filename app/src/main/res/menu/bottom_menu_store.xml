@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item  android:title="ScanQr"
+        android:icon="@drawable/ic_qr_scan_code_instance"
+        android:id="@+id/navScanQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <item android:title="Profile"
+        android:icon="@drawable/ic_user_boarder"
+        android:id="@+id/navProfile_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</menu>

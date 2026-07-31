@@ -1,0 +1,60 @@
+# Gradle generated files
+.gradle/
+build/
+*/build/
+app/build/
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local machine config
+local.properties
+
+# Android generated/native build files
+captures/
+.cxx/
+.externalNativeBuild/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Firebase generated/debug files
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+firebase-export-*/
+
+# Firebase config
+# Ignore this if the repo is public. Share privately if teammates need it.
+google-services.json
+
+# Signing keys / secrets
+*.jks
+*.keystore
+keystore.properties
+
+# Gradle wrapper: keep wrapper jar tracked
+!gradle/wrapper/gradle-wrapper.jar
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Java / Kotlin build output
+*.class
+out/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak

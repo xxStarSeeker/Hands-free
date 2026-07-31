@@ -1,0 +1,145 @@
+<resources>
+    <string name="app_name">Hands-free</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!--main activity-->
+    <string name="hands_free">Hands-Free</string>
+    <string name="app_description">Shopping without carrying the bags!</string>
+    <string name="log_in">LOG IN</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter the password</string>
+    <string name="msg_create_account">Do not have an account?</string>
+    <string name="create_account">Create a new account</string>
+    <string name="forget_password_btn">Forgot Password?</string>
+
+    <!--Create Account activity-->
+    <string name="create_account_title">Create Account</string>
+    <string name="name_field">Name</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="phone_field">Phone number"</string>
+    <string name="phone_hint">Consists of 10 digits</string>
+    <string name="email_field">E-mail</string>
+    <string name="password_field">Password</string>
+    <string name="password_hint">At least 6 letters</string>
+    <string name="re_enter_password_field">Re-enter Password</string>
+    <string name="create_btn">Create</string>
+
+    <!--forget password activity-->
+    <string name="forget_password_title">Forget Password!</string>
+    <string name="description_forget_password">Please enter your email below, and we will send a password reset link to your email.</string>
+    <string name="send_btn">Send</string>
+
+    <!--Shopper-->
+    <!--card layout-->
+    <string name="store_logo">Store logo</string>
+    <string name="in_store">In The Store</string>
+    <string name="collected">Collected</string>
+    <string name="reached">Reached</string>
+    <!--fragment item shopper-->
+    <string name="code_of_receive">Code of Receive</string>
+    <string name="filter_all">All</string>
+    <!--fragment mall map-->
+    <string name="mall_map">Mall map</string>
+    <!--fragment QR-->
+    <string name="default_timer">00:00</string>
+    <string name="at_store">in the store: 0</string>
+    <string name="at_collector">Collected:0</string>
+    <string name="Reached">Reached: 0</string>
+    <string name="defualt_disable_text">Inactive account. \nVisit Hands-Free office to reactivate.</string>
+    <string name="remaining_hours_before_qr_inactive">Remaining hours before QR inactive:</string>
+    <string name="Item_status_title">Item Status</string>
+    <string name="total_item">Total item: 0</string>
+    <!--fragment shopper account-->
+    <string name="log_out">Log out</string>
+    <string name="status_account_filed">Status of your account</string>
+    <string name="status_account_default">Inactive</string>
+    <string name="contact_info_1">you can contact us using the following email:</string>
+    <string name="hands_free_email">handsFree@gmail.com</string>
+    <string name="update_btn">Update</string>
+    <string name="email_hint">example@example.com</string>
+
+    <!--Store-->
+    <!--fragment_store_scan_qr-->
+    <string name="add_item">Add Item</string>
+    <string name="scan_shopper_QR">Scan shopper QR</string>
+    <string name="click_to_scan">Click here to scan shopper QR</string>
+    <string name="second_step_to_add_item">Print serial number.</string>
+    <string name="hint_serial_number">Serial number will appear after you scan shopper QR</string>
+    <string name="print">Print</string>
+    <string name="generate_SN">Generate Serial Number</string>
+    <!--fragment_store_profile-->
+    <string name="number_item">Number of items: </string>
+    <string name="store_name">Store name:</string>
+
+    <!--Collector-->
+    <!--fragment_collector_store-->
+    <string name="search">Search</string>
+    <string name="store_assign">Assigned Store</string>
+    <!--collector_card_layout-->
+    <string name="num_item">Total items:</string>
+    <string name="view_item">View Items</string>
+    <!--collector items-->
+    <string name="summary_of_item">- In store:\n- Collected: \n- Reached</string>
+    <string name="enter_sn">Enter serial number</string>
+    <!--fragment_collector_profile-->
+    <string name="unavailable">unavailable</string>
+    <string name="start_work">Start work:</string>
+    <string name="end_work">End work:</string>
+    <string name="shift_work_status_account_">Current Shift Work Status</string>
+    <!--fragment_collector_routing-->
+    <string name="shortest_path_button">Calculate Shortest Path</string>
+    <string name="shortest_path">Shortest path to visit store to collect items: </string>
+    <string name="nearest_store">Enter the nearest store if you are not at the office</string>
+    <string name="summary_item">Summary of items status</string>
+    <string name="collector_home_msg">You have new stores assigned, check it out!</string>
+    <string name="enter_store_name">Enter store name</string>
+
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="justToViewTextPostion">text here</string>
+    <string name="azt_collector">Collected: 0</string>
+</resources>
